@@ -30,8 +30,7 @@ public class TbAuthGroup implements Serializable {
     private LocalDateTime updDt;
 
     @ToString.Exclude
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(referencedColumnName = "authGroupId")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "tbAuthGroup")
     private List<TbUserInfo> tbUserInfoList;
 
     public static TbAuthGroup newInstance(String authGroupName) {
@@ -55,7 +54,7 @@ public class TbAuthGroup implements Serializable {
     }
 
     @OneToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "cellook.tb_auth_group_permission", joinColumns = @JoinColumn(name = "authGroupId"), inverseJoinColumns = @JoinColumn(name = "permissionId"))
+    @JoinTable(name = "tb_auth_group_permission", joinColumns = @JoinColumn(name = "authGroupId"), inverseJoinColumns = @JoinColumn(name = "permissionId"))
     @ToString.Exclude
     Set<TbAuthPermission> tbAuthPermissionList;
 

@@ -1,4 +1,4 @@
-package com.example.adminreference.exception;
+package com.example.adminreference.common.exception;
 
 import com.example.adminreference.vo.ErrorResponse;
 import org.springframework.http.HttpStatus;
@@ -7,7 +7,7 @@ import org.springframework.http.ResponseEntity;
 public enum CustomExceptionCode {
 
     BAD_REQUEST(HttpStatus.BAD_REQUEST, 400, "BadRequest"),
-    NOT_FOUND_DATA(HttpStatus.BAD_REQUEST, 102, "데이터를 찾을 수 없음"),
+    NOT_FOUND_DATA(HttpStatus.NOT_FOUND, 102, "데이터를 찾을 수 없음"),
     INVALID_RESOURCE_DUPLICATE(HttpStatus.CONFLICT, 113, "중복된 리소스 형식"),
     WRONG_PASSWORD_OR_ID(HttpStatus.UNAUTHORIZED, 104, "계정정보가 없거나 잘못된 형식"),
     ACCESS_DENIED(HttpStatus.FORBIDDEN, 111, "접속 권한 없음"), //임시

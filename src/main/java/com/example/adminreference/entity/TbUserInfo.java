@@ -1,6 +1,6 @@
 package com.example.adminreference.entity;
 
-import com.example.adminreference.dto.SignupDto;
+import com.example.adminreference.dto.UserInfoDto;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -23,6 +23,8 @@ public class TbUserInfo {
     private String username;
     private String phone_number;
     private String email;
+    private String department;
+    private String position;
 
     @Column(updatable = false, insertable = false)
     private Long authGroupId;
@@ -41,24 +43,50 @@ public class TbUserInfo {
         this.lastLoginDt = LocalDateTime.now();
     }
 
-    public static TbUserInfo of(String adminId, String encodedPassword, String userName, String phone_number, String email) {
+    public void updatePassword(String encryptedPassword) {
+        this.password = encryptedPassword;
+    }
+
+    public void updateUserInfo(UserInfoDto.Request request) {
+        this.authGroupId = request.getAuthGroupId();
+        this.department = request.getDepartment();
+        this.position = request.getPosition();
+        this.email = request.getEmail();
+        this.phone_number = request.getPhoneNumber();
+    }
+
+    public void changeAuthGroup(TbAuthGroup tbAuthGroup) {
+        if (!tbAuthGroup.equals(this.tbAuthGroup)) {
+            this.tbAuthGroup = tbAuthGroup;
+        }
+    }
+
+    public void removeAuthGroup() {
+        this.tbAuthGroup = null;
+    }
+
+    public static TbUserInfo of(String adminId, String encryptedPassword, String username, String phone_number, String email, String department, String position) {
         TbUserInfo tbUserInfo = new TbUserInfo();
         tbUserInfo.adminId = adminId;
-        tbUserInfo.password = encodedPassword;
-        tbUserInfo.username = userName;
+        tbUserInfo.password = encryptedPassword;
+        tbUserInfo.username = username;
         tbUserInfo.phone_number = phone_number;
         tbUserInfo.email = email;
+        tbUserInfo.department = department;
+        tbUserInfo.position = position;
 
         return tbUserInfo;
     }
 
-    public static TbUserInfo from(SignupDto.Request signupRequest) {
+    public static TbUserInfo from(UserInfoDto.Request userInfo) {
         return TbUserInfo.of(
-                signupRequest.getAdminId(),
-                signupRequest.getPassword(),
-                signupRequest.getUsername(),
-                signupRequest.getPhone_number(),
-                signupRequest.getEmail()
+                userInfo.getAdminId(),
+                userInfo.getPassword(),
+                userInfo.getUsername(),
+                userInfo.getPhoneNumber(),
+                userInfo.getEmail(),
+                userInfo.getDepartment(),
+                userInfo.getPosition()
         );
     }
 

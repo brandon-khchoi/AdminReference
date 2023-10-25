@@ -6,19 +6,23 @@ spring:
 
   jpa:
     show-sql: true
-  h2:
-    console:
-      enabled: true  # H2 웹 콘솔을 사용하겠다는 의미
-      path: /h2-console  # 콘솔의 경로
+#  h2:
+#    console:
+#      enabled: true  # H2 웹 콘솔을 사용하겠다는 의미
+#      path: /h2-console  # 콘솔의 경로
 
   dbadmin:
     read:
       datasource:
         hikari:
-          driver-class-name: org.h2.Driver  #h2 드라이버 설정
-          jdbc-url: jdbc:h2:file:/logs/db_admin;AUTO_SERVER=TRUE  #접속 URL
-          username: test  # 사용자 이름 (로그인 시 사용)
-          password: 1234   # 사용자 암호 (로그인 시 사용)
+          driver-class-name: com.mysql.cj.jdbc.Driver  #h2 드라이버 설정
+          jdbc-url: jdbc:mysql://localhost:3306/db_daesang  #접속 URL
+          username: root  # 사용자 이름 (로그인 시 사용)
+          password:
+#          driver-class-name: org.h2.Driver  #h2 드라이버 설정
+#          jdbc-url: jdbc:h2:file:/logs/db_admin;AUTO_SERVER=TRUE  #접속 URL
+#          username: test  # 사용자 이름 (로그인 시 사용)
+#          password: 1234   # 사용자 암호 (로그인 시 사용)
           max-lifetime: 420000 #db 설정이 500이라 바꿈
           connection-timeout: 30000 #30000
           validation-timeout: 5000
@@ -32,10 +36,14 @@ spring:
     write:
       datasource:
         hikari:
-          driver-class-name: org.h2.Driver  #h2 드라이버 설정
-          jdbc-url: jdbc:h2:file:/logs/db_admin;AUTO_SERVER=TRUE  #접속 URL
-          username: test  # 사용자 이름 (로그인 시 사용)
-          password: 1234   # 사용자 암호 (로그인 시 사용)
+          driver-class-name: com.mysql.cj.jdbc.Driver  #h2 드라이버 설정
+          jdbc-url: jdbc:mysql://localhost:3306/db_daesang  #접속 URL
+          username: root  # 사용자 이름 (로그인 시 사용)
+          password:
+#          driver-class-name: org.h2.Driver  #h2 드라이버 설정
+#          jdbc-url: jdbc:h2:file:/logs/db_admin;AUTO_SERVER=TRUE  #접속 URL
+#          username: test  # 사용자 이름 (로그인 시 사용)
+#          password: 1234   # 사용자 암호 (로그인 시 사용)
           max-lifetime: 420000 #db 설정이 500이라 바꿈
           connection-timeout: 30000 #30000
           validation-timeout: 5000
@@ -46,6 +54,6 @@ spring:
             prepStmtCacheSqlLimit: 2048
             useServerPrepStmts: true
 
-
-
+init:
+  password: "password"
 

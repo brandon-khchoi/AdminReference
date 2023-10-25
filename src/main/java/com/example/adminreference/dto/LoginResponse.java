@@ -9,5 +9,6 @@ import lombok.ToString;
 @ToString
 public class LoginResponse {
     private String username;
+    private String passwordReset;
     private String token;
 }

@@ -3,7 +3,7 @@ package com.example.adminreference.config;
 import com.example.adminreference.config.security.CustomAuthenticationHandler;
 import com.example.adminreference.config.security.JwtAuthenticationFilter;
 import com.example.adminreference.config.security.JwtProvider;
-import com.example.adminreference.exception.CustomExceptionCode;
+import com.example.adminreference.common.exception.CustomExceptionCode;
 import com.example.adminreference.vo.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
@@ -43,11 +43,6 @@ public class SecurityConfig {
     private final JwtProvider jwtProvider;
 
     @Bean
-    public PasswordEncoder getPasswordEncoder() {
-        return new BCryptPasswordEncoder();
-    }
-
-    @Bean
     public AccessDeniedHandler accessDeniedHandler() {
         return (request, response, e) -> {
             response.setStatus(HttpServletResponse.SC_FORBIDDEN);
@@ -78,12 +73,12 @@ public class SecurityConfig {
 
     public static final String[] NON_AUTH_LIST = {
             "/api-docs/**", "/swagger-ui/**", "/.well-known/jwks.json", "/h2-console/**",
-            "/swagger-ui.html", "/login/**", "/logout/**", "/health/checker", "/",
+            "/swagger-ui.html", "/health/checker", "/",
             "/signup"
     };
 
     public static final String[] NON_GRANT_LIST = {
-            "/common/**"
+            "/common/**", "/login/**", "/logout/**"
     };
 
     public static final String[] URL_WHITE_LIST = new ArrayList<String>() {{

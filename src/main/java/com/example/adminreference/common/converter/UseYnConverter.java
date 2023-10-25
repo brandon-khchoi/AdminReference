@@ -1,4 +1,4 @@
-package com.example.adminreference.converter;
+package com.example.adminreference.common.converter;
 
 import com.example.adminreference.enumeration.UseYn;
 

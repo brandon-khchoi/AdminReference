@@ -1,6 +1,6 @@
 package com.example.adminreference.entity;
 
-import com.example.adminreference.converter.UseYnConverter;
+import com.example.adminreference.common.converter.UseYnConverter;
 import com.example.adminreference.enumeration.UseYn;
 import lombok.AccessLevel;
 import lombok.Getter;

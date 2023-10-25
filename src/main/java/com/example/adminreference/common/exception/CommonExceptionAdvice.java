@@ -1,4 +1,4 @@
-package com.example.adminreference.exception;
+package com.example.adminreference.common.exception;
 
 import com.example.adminreference.vo.ErrorResponse;
 import lombok.extern.slf4j.Slf4j;

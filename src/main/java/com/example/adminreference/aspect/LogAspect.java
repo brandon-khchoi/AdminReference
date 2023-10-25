@@ -40,7 +40,7 @@ public class LogAspect {
         String adminId = "anonymousUser";
         if (!authentication.getPrincipal().equals("anonymousUser")) {
             AdminUser adminUser = (AdminUser) authentication.getPrincipal();
-            adminId = adminUser.getUsername();
+            adminId = adminUser.getAdminId();
         }
 
         HttpServletRequest request = ((ServletRequestAttributes) RequestContextHolder.currentRequestAttributes())

@@ -55,6 +55,10 @@ public class AdminUser implements UserDetails, Serializable {
         return this.adminId;
     }
 
+    public String getAdminId() {
+        return this.adminId;
+    }
+
     @Override
     public boolean isAccountNonExpired() {
         return true;

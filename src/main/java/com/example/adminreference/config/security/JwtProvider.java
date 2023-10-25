@@ -67,7 +67,7 @@ public class JwtProvider {
 
     public String createToken(AdminUser adminUser) {
         Claims claims = Jwts.claims();
-        claims.put(ClaimType.ADMIN_ID.name, adminUser.getUsername());
+        claims.put(ClaimType.ADMIN_ID.name, adminUser.getAdminId());
         claims.put(ClaimType.AUTHORITY.name, adminUser.getAuthorities());
 
         return Jwts.builder()

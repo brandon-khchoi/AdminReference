@@ -8,10 +8,12 @@ import com.example.adminreference.vo.ErrorResponse;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.AuthenticationFailureHandler;
 import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
 import org.springframework.stereotype.Component;
@@ -34,6 +36,11 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
 
     private final UserInfoRepository userInfoRepository;
 
+    private final PasswordEncoder passwordEncoder;
+
+    @Value("${init.password}")
+    private String initPassword;
+
     @Override
     @Transactional
     public void onAuthenticationSuccess(HttpServletRequest request, HttpServletResponse response, Authentication authentication) throws IOException, ServletException {
@@ -44,17 +51,18 @@ public class CustomAuthenticationHandler implements AuthenticationSuccessHandler
         AdminUser adminUser = (AdminUser) authentication.getPrincipal();
         String token = jwtProvider.createToken(adminUser);
 
-        Optional<TbUserInfo> tbUserInfo = userInfoRepository.findByAdminId(adminUser.getUsername());
+        Optional<TbUserInfo> tbUserInfo = userInfoRepository.findByAdminId(adminUser.getAdminId());
 
         if (tbUserInfo.isPresent()) {
             tbUserInfo.get().updateLastLoginDt();
             LoginResponse loginResponse = new LoginResponse();
             loginResponse.setToken(token);
-            loginResponse.setUsername(adminUser.getUsername());
+            loginResponse.setUsername(adminUser.getAdminId());
+            loginResponse.setPasswordReset(passwordEncoder.matches(initPassword, adminUser.getPassword()) ? "Y" : "N");
             objectMapper.writeValue(response.getWriter(), loginResponse);
         } else {
             LoginResponse loginResponse = new LoginResponse();
-            loginResponse.setUsername(adminUser.getUsername());
+            loginResponse.setUsername(adminUser.getAdminId());
             objectMapper.writeValue(response.getWriter(), loginResponse);
         }
     }
